@@ -13,14 +13,16 @@ from torch import nn
 from torch import optim
 from torch.utils.data import DataLoader
 from torch.utils.data.sampler import SubsetRandomSampler
-sys.path.append('../../')
-from .utils.dataset import read_data
-from .utils.model import DenseNet
-from .utils.spatial_lstm import Mvstgn
+#sys.path.append('../')
+sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
+
+from utils.dataset import read_data
+#from utils.model import DenseNet
+from utils.Mvstgn import Mvstgn
 from torch.optim.lr_scheduler import ReduceLROnPlateau
 import h5py
 import time
-from .libs.print_para import print_para
+from utils.print_para import print_para
 
 torch.manual_seed(22)
 
