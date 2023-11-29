@@ -129,8 +129,8 @@ def read_data(path, feature_path, opt):
     f = h5py.File(path, 'r')
     data, feature_data = traffic_loader(f, feature_path, opt)
 
-    index = f['idx'].value.astype(str)
-    index = to_datetime(index, format='%Y-%m-%d %H:%M')
+    index = f['idx'][()].astype(str)
+    index = to_datetime(index, format='%Y-%m-%d %H:%M:%S')
 
     cell_label = get_label_v2(data, feature_data, index, opt.cluster)
     mmn = MinMaxNorm01()

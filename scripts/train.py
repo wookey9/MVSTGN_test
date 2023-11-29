@@ -26,7 +26,7 @@ from utils.print_para import print_para
 
 torch.manual_seed(22)
 
-device = torch.device("cuda")
+device = torch.device("mps")
 
 parse = argparse.ArgumentParser()
 parse.add_argument('-height', type=int, default=100)
@@ -197,8 +197,8 @@ def train_valid_split(dataloader, test_size=0.2, shuffle=True, random_seed=0):
 
 if __name__ == '__main__':
 
-    path = 'data/data_git_version.h5'
-    feature_path = 'data/crawled_feature.csv'
+    path = '../dataset/data_git_version.h5'
+    feature_path = '../dataset/crawled_feature.csv'
     X, X_meta, X_cross, y, label, mmn = read_data(path, feature_path, opt)
 
     samples, sequences, channels, height, width = X.shape
@@ -245,14 +245,13 @@ if __name__ == '__main__':
 
     model = Mvstgn(input_shape, meta_shape,
                     cross_shape, nb_flows=opt.nb_flow,
-                    fusion=opt.fusion).to(device)             
+                    ).to(device)
     print(print_para(model), flush=True)
 
     optimizer = optim.Adam(model.parameters(), opt.lr)
     scheduler = torch.optim.lr_scheduler.MultiStepLR(optimizer,
                                                     milestones=[0.5 * opt.epoch_size,
-                                                                    0.75 * opt.epoch_size, 0.9 * opt.epoch_size],
-                                                    gamma=0.1)
+                                                                    0.75 * opt.epoch_size, 0.9 * opt.epoch_size],gamma=0.1)
 
     if not os.path.exists(opt.save_dir):
         os.makedirs(opt.save_dir)
