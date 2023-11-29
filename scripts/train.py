@@ -26,7 +26,7 @@ from utils.print_para import print_para
 
 torch.manual_seed(22)
 
-device = torch.device("mps")
+device = torch.device("cuda")
 
 parse = argparse.ArgumentParser()
 parse.add_argument('-height', type=int, default=100)
